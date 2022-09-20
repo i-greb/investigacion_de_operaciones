@@ -1,0 +1,39 @@
+#importar librería
+library(lpSolve)
+
+# Se guardan en una matriz los coeficientes de la función objetivo
+funcion_objetivo <- c(2500, 2600)
+funcion_objetivo
+
+# Asignar los coeficientes de las desigualdades
+#X1 + X2 ≤ 4700		1     1  (1)
+#X1 > 800			1     0  (2)
+#X2 ≤ 900			0     1  (3)
+#X1 ≤ 1,800			1     0  (4)
+
+# Definir el número de filas en 4
+
+restriciones_derecho <- matrix(c(1,1,1,0,0,1,1,0), nrow = 4, byrow = T)
+
+restriciones_derecho
+
+
+# Se guarda en una matriz los simbolos de las desigualdades
+
+restriccion.direccion <- c("<=", ">", "<=", "<=")
+restriccion.direccion
+
+# Asignar los valores del lado derecho de las desiguldades
+#X1 + X2 ≤ 4700		4700   (1)
+#X1      > 800		800    (2)
+#X2      ≤ 900		900    (3)
+#X1      ≤ 1800	1800  (4)
+
+lado_derecho.restriccion <- c(4700, 800, 900, 1800)
+lado_derecho.restriccion
+
+# Se ejecuta la instrucción para mostrar el resultado que maximize la función
+lp(direction = "max", objective.in = funcion_objetivo, const.mat =restriciones_derecho, const.dir = restriccion.direccion, const.rhs = lado_derecho.restriccion, int.vec = c(1, 2, 3, 4, 5), all.int = T)
+
+# Se ejecuta la instrucción para mostrar los valores de x1 y x2.
+lp(direction = "max", objective.in = funcion_objetivo, const.mat =restriciones_derecho, const.dir = restriccion.direccion, const.rhs = lado_derecho.restriccion, int.vec = c(1, 2, 3, 4, 5), all.int = T)$solution
